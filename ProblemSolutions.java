@@ -8,8 +8,6 @@
  ********************************************************************/
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
 
 public class ProblemSolutions {
 
@@ -113,38 +111,59 @@ public class ProblemSolutions {
         // TO CODE WITH A SPACE COMPLEXITY OF O(N LOG N), WHICH IS FINE FOR PURPOSES
         // OF THIS PROGRAMMING EXERCISES.
 
-        List<Integer> divisible = new ArrayList<>();
-        List<Integer> notDivisible = new ArrayList<>();
+        int[] divisible = new int[right - left + 1];
+        int[] notDivisible = new int[right - left + 1];
 
+        int divisibleIndex = 0, notDivisibleIndex = 0;
         int i = left, j = mid + 1;
 
         while (i <= mid && j <= right) {
             if (arr[i] <= arr[j]) {
-                if (arr[i] % k == 0) divisible.add(arr[i]);
-                else notDivisible.add(arr[i]);
-                i++;
+                if (arr[i] % k == 0) {
+                    divisible[divisibleIndex++] = arr[i];
             } else {
-                if (arr[j] % k == 0) divisible.add(arr[j]);
-                else notDivisible.add(arr[j]);
-                j++;
+                notDivisible[notDivisibleIndex++] = arr[i];
             }
+            i++;
+        } else {
+            if (arr[j] % k == 0) {
+                divisible[divisibleIndex++] = arr[j];
+            } else {
+                notDivisible[notDivisibleIndex++] = arr[j];
+            }
+            j++;
         }
+    }
 
         while (i <= mid) {
-            if (arr[i] % k == 0) divisible.add(arr[i]);
-            else notDivisible.add(arr[i]);
+            if (arr[i] % k == 0) {
+                divisible[divisibleIndex++] = arr[i];
+            } else {
+                notDivisible[notDivisibleIndex++] = arr[i];
+            }
             i++;
         }
 
         while (j <= right) {
-            if (arr[j] % k == 0) divisible.add(arr[j]);
-            else notDivisible.add(arr[j]);
+            if (arr[j] % k == 0) {
+                divisible[divisibleIndex++] = arr[j];
+            } else {
+                notDivisible[notDivisibleIndex++] = arr[j];
+            }
             j++;
         }
 
         int idx = left;
-        for (int val : divisible) arr[idx++] = val;
-        for (int val : notDivisible) arr[idx++] = val;
+        for (int val : divisible) {
+            if (val != 0) {
+                arr[idx++] = val;
+            }
+        }
+        for (int val : notDivisible) {
+            if (val != 0) {
+                arr[idx++] = val;
+            }
+        }
     }
 
     /**
