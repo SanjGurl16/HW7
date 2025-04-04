@@ -42,8 +42,16 @@ public class ProblemSolutions {
             // "SELECTION SORT" ALGORITHM.
             // DO NOT FORGET TO ADD YOUR NAME / SECTION ABOVE
 
+            int index = i;
+            for (int j = i + 1; j < n; j++) {
+                if ((ascending && values[j] < values[index]) || (!ascending && values[j] > values[index])) {
+                    index = j;
+                }
+                // Swap the found minimum/maximum element with the first element
+                int temp = values[i];
+                values[i] = values[index];
+                values[index] = temp;
         }
-
     } // End class selectionSort
 
 
@@ -102,10 +110,20 @@ public class ProblemSolutions {
         // TO CODE WITH A SPACE COMPLEXITY OF O(N LOG N), WHICH IS FINE FOR PURPOSES
         // OF THIS PROGRAMMING EXERCISES.
 
-        return;
-
+        int[] temp = new int[right - left + 1]; // Initializes a temporary array to store the merged result
+        int i = left, j = mid + 1, idx = 0; // Initial pointers for the left and right subarrays and the index for the temp array
+        while (i <= mid && j <= right) { 
+            boolean iDiv = arr[i] % k == 0, jDiv = arr[j] % k == 0; // Determine if the current elements from both subarrays are divisible by k
+            if ((iDiv && jDiv) || (!iDiv && !jDiv)) { // If both elements are either divisible or not divisible by k, compare values normally
+                temp[idx++] = arr[i] <= arr[j] ? arr[i++] : arr[j++];
+            } else {
+                temp[idx++] = iDiv ? arr[i++] : arr[j++]; // If only one element is divisible by k, prioritize it in the merged result
+            }
+        }
+        while (i <= mid) temp[idx++] = arr[i++]; // Copy any remaining elements from the left half
+        while (j <= right) temp[idx++] = arr[j++]; // Copy any remaining elements from the right half
+        System.arraycopy(temp, 0, arr, left, temp.length); // Copy the sorted temporary array back into the original array
     }
-
 
     /**
      * Method asteroidsDestroyed
@@ -156,8 +174,13 @@ public class ProblemSolutions {
 
         // YOUR CODE GOES HERE, CONSIDER USING ARRAYS.SORT()
 
-        return false;
-
+        Arrays.sort(asteroids); // Sort asteroids in ascending order
+        long currentMass = mass;
+        for (int asteroid : asteroids) {
+            if (currentMass < asteroid) return false; // Planet is destroyed
+            currentMass += asteroid; // Increase mass after absorbing asteroid
+        }
+        return true;
     }
 
 
@@ -194,9 +217,14 @@ public class ProblemSolutions {
 
         // YOUR CODE GOES HERE, CONSIDER USING ARRAYS.SORT
 
-        return -1;
-
+        Arrays.sort(people); // Sort people by weight
+        int left = 0, right = people.length - 1, sleds = 0;
+        while (left <= right) {
+            if (people[left] + people[right] <= limit) left++; // Pair the lightest with the haeviest
+            right--; // Move the heavier person onto a sled
+            sleds++; // Increase sled count 
+        }
+        return sleds;
     }
-
 } // End Class ProblemSolutions
 
