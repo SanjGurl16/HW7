@@ -123,20 +123,35 @@ public class ProblemSolutions {
             }
         }
 
-        while (i <= mid) temp[idx++] = arr[i++];
-        while (j <= right) temp[idx++] = arr[j++];
+        while (i <= mid) {
+            temp[idx++] = arr[i++];
+        } 
+
+        while (j <= right) {
+            temp[idx++] = arr[j++];
+        }
 
         // Copy sorted section back into original array
-        idx = left;
+        for (int x = 0; x < temp.length; x++) {
+            arr[left + x] = temp[x];
+        }
+        int[] reordered = new int[temp.length];
+        idx = 0;
+
         for (int x = 0; x < temp.length; x++) {
             if (temp[x] % k == 0) {
-                arr[idx++] = temp[x];
+                reordered[idx++] = temp[x];
             }
         }
+
         for (int x = 0; x < temp.length; x++) {
             if (temp[x] % k != 0) {
-                arr[idx++] = temp[x];
+                reordered[idx++] = temp[x];
             }
+        }
+
+        for (int x = 0; x < reordered.length; x++) {
+            arr[left + x] = reordered[x];
         }
     }
 
