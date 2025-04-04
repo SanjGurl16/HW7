@@ -8,6 +8,8 @@
  ********************************************************************/
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ProblemSolutions {
 
@@ -111,19 +113,38 @@ public class ProblemSolutions {
         // TO CODE WITH A SPACE COMPLEXITY OF O(N LOG N), WHICH IS FINE FOR PURPOSES
         // OF THIS PROGRAMMING EXERCISES.
 
-        int[] temp = new int[right - left + 1]; // Initializes a temporary array to store the merged result
-        int i = left, j = mid + 1, idx = 0; // Initial pointers for the left and right subarrays and the index for the temp array
-        while (i <= mid && j <= right) { 
-            boolean iDiv = arr[i] % k == 0, jDiv = arr[j] % k == 0; // Determine if the current elements from both subarrays are divisible by k
-            if ((iDiv && jDiv) || (!iDiv && !jDiv)) { // If both elements are either divisible or not divisible by k, compare values normally
-                temp[idx++] = arr[i] <= arr[j] ? arr[i++] : arr[j++];
+        List<Integer> divisible = new ArrayList<>();
+        List<Integer> notDivisible = new ArrayList<>();
+
+        int i = left, j = mid + 1;
+
+        while (i <= mid && j <= right) {
+            if (arr[i] <= arr[j]) {
+                if (arr[i] % k == 0) divisible.add(arr[i]);
+                else notDivisible.add(arr[i]);
+                i++;
             } else {
-                temp[idx++] = iDiv ? arr[i++] : arr[j++]; // If only one element is divisible by k, prioritize it in the merged result
+                if (arr[j] % k == 0) divisible.add(arr[j]);
+                else notDivisible.add(arr[j]);
+                j++;
             }
         }
-        while (i <= mid) temp[idx++] = arr[i++]; // Copy any remaining elements from the left half
-        while (j <= right) temp[idx++] = arr[j++]; // Copy any remaining elements from the right half
-        System.arraycopy(temp, 0, arr, left, temp.length); // Copy the sorted temporary array back into the original array
+
+        while (i <= mid) {
+            if (arr[i] % k == 0) divisible.add(arr[i]);
+            else notDivisible.add(arr[i]);
+            i++;
+        }
+
+        while (j <= right) {
+            if (arr[j] % k == 0) divisible.add(arr[j]);
+            else notDivisible.add(arr[j]);
+            j++;
+        }
+
+        int idx = left;
+        for (int val : divisible) arr[idx++] = val;
+        for (int val : notDivisible) arr[idx++] = val;
     }
 
     /**
