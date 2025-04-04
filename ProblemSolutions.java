@@ -112,62 +112,29 @@ public class ProblemSolutions {
         // OF THIS PROGRAMMING EXERCISES.
 
         // Create arrays to store divisible and non-divisible numbers
-        int[] divisible = new int[right - left + 1];
-        int[] notDivisible = new int[right - left + 1];
+        int[] temp = new int[right - left + 1];
+        int i = left, j = mid + 1, idx = 0;
 
-        int divisibleIndex = 0, notDivisibleIndex = 0;
-        int i = left, j = mid + 1;
-
-        // Merge the two halves
         while (i <= mid && j <= right) {
-            if (arr[i] <= arr[j]) {
-                if (arr[i] % k == 0) {
-                    divisible[divisibleIndex++] = arr[i];
-                } else {
-                    notDivisible[notDivisibleIndex++] = arr[i];
-                }
-                i++;
+            boolean iDiv = arr[i] % k == 0;
+            boolean jDiv = arr[j] % k == 0;
+
+            if (iDiv && jDiv) {
+                temp[idx++] = arr[i] <= arr[j] ? arr[i++] : arr[j++];
+            } else if (!iDiv && !jDiv) {
+                temp[idx++] = arr[i] <= arr[j] ? arr[i++] : arr[j++];
             } else {
-                if (arr[j] % k == 0) {
-                    divisible[divisibleIndex++] = arr[j];
-                } else {
-                    notDivisible[notDivisibleIndex++] = arr[j];
-                }
-                j++;
+                // Prioritize the one divisible by k
+                temp[idx++] = iDiv ? arr[i++] : arr[j++];
             }
         }
 
-        // Process remaining elements in the left half
-        while (i <= mid) {
-            if (arr[i] % k == 0) {
-                divisible[divisibleIndex++] = arr[i];
-            } else {
-                notDivisible[notDivisibleIndex++] = arr[i];
-            }
-            i++;
-        }
+        while (i <= mid) temp[idx++] = arr[i++];
+        while (j <= right) temp[idx++] = arr[j++];
 
-        // Process remaining elements in the right half
-        while (j <= right) {
-            if (arr[j] % k == 0) {
-                divisible[divisibleIndex++] = arr[j];
-            } else {
-                notDivisible[notDivisibleIndex++] = arr[j];
-            }
-            j++;
-        }
-
-        // Reconstruct the original array with divisible elements first, then non-divisible
-        int idx = left;
-        for (int val : divisible) {
-            if (val != 0) {  // Skip uninitialized zeros
-                arr[idx++] = val;
-            }
-        }
-        for (int val : notDivisible) {
-            if (val != 0) {  // Skip uninitialized zeros
-                arr[idx++] = val;
-            }
+        // Copy sorted section back into original array
+        for (int t = 0; t < temp.length; t++) {
+            arr[left + t] = temp[t];
         }
     }
 
