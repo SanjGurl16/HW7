@@ -116,16 +116,10 @@ public class ProblemSolutions {
         int i = left, j = mid + 1, idx = 0;
 
         while (i <= mid && j <= right) {
-            boolean iDiv = arr[i] % k == 0;
-            boolean jDiv = arr[j] % k == 0;
-
-            if (iDiv && jDiv) {
-                temp[idx++] = arr[i] <= arr[j] ? arr[i++] : arr[j++];
-            } else if (!iDiv && !jDiv) {
-                temp[idx++] = arr[i] <= arr[j] ? arr[i++] : arr[j++];
+            if (arr[i] <= arr[j]) {
+                temp[idx++] = arr[i++];
             } else {
-                // Prioritize the one divisible by k
-                temp[idx++] = iDiv ? arr[i++] : arr[j++];
+                temp[idx++] = arr[j++];
             }
         }
 
@@ -133,8 +127,16 @@ public class ProblemSolutions {
         while (j <= right) temp[idx++] = arr[j++];
 
         // Copy sorted section back into original array
-        for (int t = 0; t < temp.length; t++) {
-            arr[left + t] = temp[t];
+        idx = left;
+        for (int x = 0; x < temp.length; x++) {
+            if (temp[x] % k == 0) {
+                arr[idx++] = temp[x];
+            }
+        }
+        for (int x = 0; x < temp.length; x++) {
+            if (temp[x] % k != 0) {
+                arr[idx++] = temp[x];
+            }
         }
     }
 
