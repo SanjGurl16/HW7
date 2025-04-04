@@ -47,6 +47,7 @@ public class ProblemSolutions {
                 if ((ascending && values[j] < values[index]) || (!ascending && values[j] > values[index])) {
                     index = j;
                 }
+            }
                 // Swap the found minimum/maximum element with the first element
                 int temp = values[i];
                 values[i] = values[index];
