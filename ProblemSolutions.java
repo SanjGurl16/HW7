@@ -113,16 +113,18 @@ public class ProblemSolutions {
 
         // Create arrays to store divisible and non-divisible numbers
         int[] temp = new int[right - left + 1];
-        int i = left, j = mid + 1, idx = 0;
+        int i = left;
+        int j = mid + 1;
+        int idx = 0;
 
         while (i <= mid && j <= right) {
             if (arr[i] <= arr[j]) {
                 temp[idx++] = arr[i++];
-            } else {
+            } 
+            else {
                 temp[idx++] = arr[j++];
             }
         }
-
         while (i <= mid) {
             temp[idx++] = arr[i++];
         } 
@@ -130,7 +132,6 @@ public class ProblemSolutions {
         while (j <= right) {
             temp[idx++] = arr[j++];
         }
-
         idx = left;
 
         // Copy sorted section back into original array
