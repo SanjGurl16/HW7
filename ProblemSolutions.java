@@ -281,6 +281,12 @@ public class ProblemSolutions {
             }
         }
 
+        for (int i = left; i <= right; i++) {
+            if (arr[i] % k != 0) {
+                temp[idx++] = arr[i];
+            }
+        }
+
         for (int i = 0; i < temp.length; i++) {
             arr[left + i] = temp[i];
         }
