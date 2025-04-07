@@ -272,15 +272,17 @@ public class ProblemSolutions {
             arr[left + i] = temp[i];
         }*/
 
-        int[] temp = new int[right - left + 1];
-        int idx = 0;
+        int[] temp = new int[right - left + 1]; // Temporary array for merging
+        int idx = 0; // Pointer for placing values in temp array
 
+        // Copy all divisible by k into temp array
         for (int i = left; i <= right; i++) {
             if (arr[i] % k == 0) {
                 temp[idx++] = arr[i];
             }
         }
 
+        // Copy all non-divisible by k into temp array
         for (int i = left; i <= right; i++) {
             if (arr[i] % k != 0) {
                 temp[idx++] = arr[i];
