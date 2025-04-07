@@ -145,7 +145,7 @@ public class ProblemSolutions {
             if (temp[t] % k != 0) {
                 arr[idx++] = temp[t];
             }
-        }*/
+        }
 
         // Copy both halves into temp arrays
         int[] leftArr = new int[mid - left + 1];
@@ -271,6 +271,19 @@ public class ProblemSolutions {
         for (int i = 0; i < temp.length; i++) {
             arr[left + i] = temp[i];
         }*/
+
+        int[] temp = new int[right - left + 1];
+        int idx = 0;
+
+        for (int i = left; i <= right; i++) {
+            if (arr[i] % k == 0) {
+                temp[idx++] = arr[i];
+            }
+        }
+
+        for (int i = 0; i < temp.length; i++) {
+            arr[left + i] = temp[i];
+        }
     }
 
     /**
