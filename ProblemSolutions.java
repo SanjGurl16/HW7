@@ -282,8 +282,6 @@ public class ProblemSolutions {
             }
         }
 
-        Arrays.sort(temp, 0, idx);
-
         // Copy all non-divisible by k into temp array
         for (int i = left; i <= right; i++) {
             if (arr[i] % k != 0) {
