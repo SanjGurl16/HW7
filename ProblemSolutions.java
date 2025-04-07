@@ -160,9 +160,64 @@ public class ProblemSolutions {
 
         // Collect all numbers into divisible or notDivisible arrays
         int[] temp = new int[right - left + 1];
+        int i = 0;
+        int j = 0;
         int idx = 0;
 
-        // Collect divisible by k
+        int[] divTemp = new int[temp.length];
+        int[] notDivTemp = new int[temp.length];
+        int divIdx = 0;
+        int notDivIdx = 0;
+
+        while (i < leftArr.length && j < rightArr.length) {
+            if (leftArr[i] <= rightArr[j]) {
+                if (leftArr[i] % k == 0) {
+                    divTemp[divIdx++] = leftArr[i];
+                }
+                else {
+                    notDivTemp[notDivIdx++] = leftArr[i];
+                }
+                i++;
+            }
+            else {
+                if (rightArr[j] % k == 0) {
+                    divTemp[divIdx++] = rightArr[j];
+                }
+                else {
+                    notDivTemp[notDivIdx++] = rightArr[j];
+                }
+                j++;
+            }
+        }
+
+        while (i < leftArr.length) {
+            if (leftArr[i] % k == 0) {
+                divTemp[divIdx++] = leftArr[i];
+            }
+            else {
+                notDivTemp[notDivIdx++] = leftArr[i];
+            }
+            i++;
+        }
+
+        while (j < rightArr.length) {
+            if (rightArr[j] % k == 0) {
+                divTemp[divIdx++] = rightArr[j];
+            }
+            else {
+                notDivTemp[notDivIdx++] = rightArr[j];
+            }
+            j++;
+        }
+
+        for (i = 0; i < divIdx; i++) {
+            arr[left + i] = divTemp[i];
+        }
+        for (j = 0; j < notDivIdx; j++) {
+            arr[left + divIdx + j] = notDivTemp[j];
+        }
+
+        /* // Collect divisible by k
         for (int val : leftArr) {
             if (val % k == 0) temp[idx++] = val;
         }
@@ -196,7 +251,7 @@ public class ProblemSolutions {
         // Copy back to original array
         for (int i = 0; i < temp.length; i++) {
             arr[left + i] = temp[i];
-        }
+        }*/
     }
 
     /**
