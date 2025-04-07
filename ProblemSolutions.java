@@ -112,7 +112,7 @@ public class ProblemSolutions {
         // OF THIS PROGRAMMING EXERCISES.
 
         // Create arrays to store divisible and non-divisible numbers
-        int[] temp = new int[right - left + 1];
+        /* int[] temp = new int[right - left + 1];
         int i = left;
         int j = mid + 1;
         int idx = 0;
@@ -145,6 +145,47 @@ public class ProblemSolutions {
             if (temp[t] % k != 0) {
                 arr[idx++] = temp[t];
             }
+        }*/
+
+        int[] leftArr = new int[mid - left + 1];
+        int[] rightArr = new int[right - mid];
+
+        for (int i = 0; i < leftArr.length; i++) {
+            leftArr[i] = arr[left + i];
+        }
+        for (int j = 0; j < rightArr.length; j++) {
+            rightArr[j] = arr[mid + 1 + j];
+        }
+
+        int i = 0;
+        int j = 0;
+        int idx = left;
+
+        while (i < leftArr.length && j < rightArr.length) {
+            boolean leftDiv = leftArr[i] % k == 0;
+            boolean rightDiv = rightArr[i] % k == 0;
+
+            if (leftDiv && !rightDiv) {
+                arr[idx++] = leftArr[i++];
+            }
+            else if (!leftDiv && rightDiv) {
+                arr[idx++] = rightArr[j++];
+            }
+            else {
+                if (leftArr[i] <= rightArr[j]) {
+                    arr[idx++] = leftArr[i++];
+                }
+                else {
+                    arr[idx++] = rightArr[j++];
+                }
+            }
+        }
+
+        while (i < leftArr.length) {
+            arr[idx++] = leftArr[i++];
+        }
+        while (j < rightArr.length) {
+            arr[idx++] = rightArr[j++];
         }
     }
 
