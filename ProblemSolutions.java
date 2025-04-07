@@ -208,6 +208,16 @@ public class ProblemSolutions {
             j++;
         }
 
+        for (i = 0; i < divIdx - 1; i++) {
+            for (j = i + 1; j < divIdx; j++) {
+                if (divTemp[i] < divTemp[j]) {
+                    int tmp = divTemp[i];
+                    divTemp[i] = divTemp[j];
+                    divTemp[j] = tmp;
+                }
+            }
+        }
+
         for (i = 0; i < notDivIdx - 1; i++) {
             for (j = i + 1; j < notDivIdx; j++) {
                 if (notDivTemp[i] > notDivTemp[j]) {
