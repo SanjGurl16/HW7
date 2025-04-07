@@ -163,7 +163,7 @@ public class ProblemSolutions {
 
         while (i < leftArr.length && j < rightArr.length) {
             boolean leftDiv = leftArr[i] % k == 0;
-            boolean rightDiv = rightArr[i] % k == 0;
+            boolean rightDiv = rightArr[j] % k == 0;
 
             if (leftDiv && !rightDiv) {
                 arr[idx++] = leftArr[i++];
