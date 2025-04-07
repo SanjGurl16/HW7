@@ -159,15 +159,13 @@ public class ProblemSolutions {
         }
 
         // Collect all numbers into divisible or notDivisible arrays
-        int[] temp = new int[right - left + 1];
-        int i = 0;
-        int j = 0;
-        int idx = 0;
-
-        int[] divTemp = new int[temp.length];
-        int[] notDivTemp = new int[temp.length];
+        int[] divTemp = new int[right - left + 1];
+        int[] notDivTemp = new int[right - left + 1];
         int divIdx = 0;
         int notDivIdx = 0;
+
+        int i = 0;
+        int j = 0;
 
         while (i < leftArr.length && j < rightArr.length) {
             if (leftArr[i] <= rightArr[j]) {
@@ -210,11 +208,22 @@ public class ProblemSolutions {
             j++;
         }
 
+        for (i = 0; i < notDivIdx - 1; i++) {
+            for (j = i + 1; j < notDivIdx; j++) {
+                if (notDivTemp[i] > notDivTemp[j]) {
+                    int tmp = notDivTemp[i];
+                    notDivTemp[i] = notDivTemp[j];
+                    notDivTemp[j] = tmp;
+                }
+            }
+        }
+
+        int idx = left;
         for (i = 0; i < divIdx; i++) {
-            arr[left + i] = divTemp[i];
+            arr[idx++] = divTemp[i];
         }
         for (j = 0; j < notDivIdx; j++) {
-            arr[left + divIdx + j] = notDivTemp[j];
+            arr[idx++] = notDivTemp[j];
         }
 
         /* // Collect divisible by k
