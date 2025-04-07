@@ -147,6 +147,7 @@ public class ProblemSolutions {
             }
         }*/
 
+        // Copy both halves into temp arrays
         int[] leftArr = new int[mid - left + 1];
         int[] rightArr = new int[right - mid];
 
@@ -157,35 +158,44 @@ public class ProblemSolutions {
             rightArr[j] = arr[mid + 1 + j];
         }
 
-        int i = 0;
-        int j = 0;
-        int idx = left;
+        // Collect all numbers into divisible or notDivisible arrays
+        int[] temp = new int[right - left + 1];
+        int idx = 0;
 
-        while (i < leftArr.length && j < rightArr.length) {
-            boolean leftDiv = leftArr[i] % k == 0;
-            boolean rightDiv = rightArr[j] % k == 0;
+        // Collect divisible by k
+        for (int val : leftArr) {
+            if (val % k == 0) temp[idx++] = val;
+        }
+        for (int val : rightArr) {
+            if (val % k == 0) temp[idx++] = val;
+        }   
 
-            if (leftDiv && !rightDiv) {
-                arr[idx++] = leftArr[i++];
-            }
-            else if (!leftDiv && rightDiv) {
-                arr[idx++] = rightArr[j++];
-            }
-            else {
-                if (leftArr[i] <= rightArr[j]) {
-                    arr[idx++] = leftArr[i++];
-                }
-                else {
-                    arr[idx++] = rightArr[j++];
-                }
-            }
+        // Sort and reverse divisible part
+        Arrays.sort(temp, 0, idx);
+        int start = 0;
+        int end = idx -1;
+        while (start < end) {
+            int t = temp[start];
+            temp[start] = temp[end];
+            temp[end] = t;
+            start++;
+            end--;
         }
 
-        while (i < leftArr.length) {
-            arr[idx++] = leftArr[i++];
+        // Collect not divisible by k
+        for (int val : leftArr) {
+            if (val % k != 0) temp[idx++] = val;
         }
-        while (j < rightArr.length) {
-            arr[idx++] = rightArr[j++];
+        for (int val : rightArr) {
+            if (val % k != 0) temp[idx++] = val;
+        }
+
+        // Sort not divisible part (ascending)
+        Arrays.sort(temp, right - left + 1 - (idx - (mid - left + 1 + rightArr.length)), idx);
+
+        // Copy back to original array
+        for (int i = 0; i < temp.length; i++) {
+            arr[left + i] = temp[i];
         }
     }
 
