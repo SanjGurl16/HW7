@@ -272,7 +272,7 @@ public class ProblemSolutions {
             arr[left + i] = temp[i];
         }*/
 
-        /*int[] temp = new int[right - left + 1]; // Temporary array for merging
+        int[] temp = new int[right - left + 1]; // Temporary array for merging
         int idx = 0; // Pointer for placing values in temp array
 
         // Copy all divisible by k into temp array
@@ -293,49 +293,7 @@ public class ProblemSolutions {
 
         for (int i = 0; i < temp.length; i++) {
             arr[left + i] = temp[i];
-        }*/
-
-        // Create temporary arrays for left and right halves
-    int[] leftTemp = new int[mid - left + 1];
-    int[] rightTemp = new int[right - mid];
-
-    // Copy data into temp arrays
-    System.arraycopy(arr, left, leftTemp, 0, leftTemp.length);
-    System.arraycopy(arr, mid + 1, rightTemp, 0, rightTemp.length);
-
-    // Initialize indices for leftTemp, rightTemp, and the original array
-    int i = 0, j = 0, idx = left;
-
-    // Merge the two halves, placing elements divisible by k first
-    while (i < leftTemp.length && j < rightTemp.length) {
-        if (leftTemp[i] % k == 0) {
-            arr[idx++] = leftTemp[i++];
-        } else if (rightTemp[j] % k == 0) {
-            arr[idx++] = rightTemp[j++];
-        } else if (leftTemp[i] <= rightTemp[j]) {
-            arr[idx++] = leftTemp[i++];
-        } else {
-            arr[idx++] = rightTemp[j++];
         }
-    }
-
-    // Add remaining elements from leftTemp if any
-    while (i < leftTemp.length) {
-        if (leftTemp[i] % k == 0) {
-            arr[idx++] = leftTemp[i++];
-        } else {
-            i++; // Skip adding non-k-divisible elements
-        }
-    }
-
-    // Add remaining elements from rightTemp if any
-    while (j < rightTemp.length) {
-        if (rightTemp[j] % k == 0) {
-            arr[idx++] = rightTemp[j++];
-        } else {
-            j++; // Skip adding non-k-divisible elements
-        }
-    }
     }
 
     /**
