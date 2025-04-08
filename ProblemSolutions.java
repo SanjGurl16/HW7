@@ -111,31 +111,38 @@ public class ProblemSolutions {
         // TO CODE WITH A SPACE COMPLEXITY OF O(N LOG N), WHICH IS FINE FOR PURPOSES
         // OF THIS PROGRAMMING EXERCISES.
 
+        // Find sizes of two sub-arrays to be merged
         int n1 = mid - left + 1;
         int n2 = right - mid;
 
+        // Create temp arrays
         int[] L = new int[n1];
         int[] R = new int[n2];
 
+        // Copy data to temp arrays
         for (int i = 0; i < n1; ++i)
             L[i] = arr[left + i];
         for (int j = 0; j < n2; ++j)
             R[j] = arr[mid + 1 +j];
 
+        // Initial indices of first and second subarrays    
         int i = 0;
         int j = 0;
+
+        // Initial index of merged subarray
         int x = left;
 
+        // Merge the temp arrays
         while (i < n1 && j < n2) {
-            if (L[i] % k == 0) {
+            if (L[i] % k == 0) { // Check if L[i] is divisible by k, if so copy to arr[x]
                 arr[x++] = L[i++];
             }
 
-            else if (R[j] % k == 0) {
+            else if (R[j] % k == 0) { // Check if R[j] is divisible by k, if so copy to arr[x]
                 arr[x++] = R[j++];
             }
 
-            else {
+            else { // If neither is divisible by k, merge normally
                 if (L[i] <= R[j]) {
                     arr[x++] = L[i++];
                 }
@@ -145,11 +152,11 @@ public class ProblemSolutions {
             }
         }
 
-        while (i < n1) {
+        while (i < n1) { // Copy remaining elements of L[] if any
             arr[x++] = L[i++];
         }
 
-        while (j < n2) {
+        while (j < n2) { // Copy remaining elements of R[] if any
             arr[x++] = R[j++];
         }
     }
