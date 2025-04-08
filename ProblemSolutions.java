@@ -111,188 +111,46 @@ public class ProblemSolutions {
         // TO CODE WITH A SPACE COMPLEXITY OF O(N LOG N), WHICH IS FINE FOR PURPOSES
         // OF THIS PROGRAMMING EXERCISES.
 
-        // Create arrays to store divisible and non-divisible numbers
-        /* int[] temp = new int[right - left + 1];
-        int i = left;
-        int j = mid + 1;
-        int idx = 0;
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
 
-        while (i <= mid && j <= right) {
-            if (arr[i] <= arr[j]) {
-                temp[idx++] = arr[i++];
-            } 
-            else {
-                temp[idx++] = arr[j++];
-            }
-        }
-        while (i <= mid) {
-            temp[idx++] = arr[i++];
-        } 
+        int[] L = new int[n1];
+        int[] R = new int[n2];
 
-        while (j <= right) {
-            temp[idx++] = arr[j++];
-        }
-        idx = left;
-
-        // Copy sorted section back into original array
-        for (int t = 0; t < temp.length; t++) {
-            if (temp[t] % k == 0) {
-                arr[idx++] = temp[t];
-            }
-        }
-
-        for (int t = 0; t < temp.length; t++) {
-            if (temp[t] % k != 0) {
-                arr[idx++] = temp[t];
-            }
-        }
-
-        // Copy both halves into temp arrays
-        int[] leftArr = new int[mid - left + 1];
-        int[] rightArr = new int[right - mid];
-
-        for (int i = 0; i < leftArr.length; i++) {
-            leftArr[i] = arr[left + i];
-        }
-        for (int j = 0; j < rightArr.length; j++) {
-            rightArr[j] = arr[mid + 1 + j];
-        }
-
-        // Collect all numbers into divisible or notDivisible arrays
-        int[] divTemp = new int[right - left + 1];
-        int[] notDivTemp = new int[right - left + 1];
-        int divIdx = 0;
-        int notDivIdx = 0;
+        for (int i = 0; i < n1; ++i)
+            L[i] = arr[left + i];
+        for (int j = 0; j < n2; ++j)
+            R[j] = arr[mid + 1 +j];
 
         int i = 0;
         int j = 0;
+        int x = left;
 
-        while (i < leftArr.length && j < rightArr.length) {
-            if (leftArr[i] <= rightArr[j]) {
-                if (leftArr[i] % k == 0) {
-                    divTemp[divIdx++] = leftArr[i];
+        while (i < n1 && j < n2) {
+            if (L[i] % k == 0) {
+                arr[x++] = L[i++];
+            }
+
+            else if (R[j] % k == 0) {
+                arr[x++] = R[j++];
+            }
+
+            else {
+                if (L[i] <= R[j]) {
+                    arr[x++] = L[i++];
                 }
                 else {
-                    notDivTemp[notDivIdx++] = leftArr[i];
-                }
-                i++;
-            }
-            else {
-                if (rightArr[j] % k == 0) {
-                    divTemp[divIdx++] = rightArr[j];
-                }
-                else {
-                    notDivTemp[notDivIdx++] = rightArr[j];
-                }
-                j++;
-            }
-        }
-
-        while (i < leftArr.length) {
-            if (leftArr[i] % k == 0) {
-                divTemp[divIdx++] = leftArr[i];
-            }
-            else {
-                notDivTemp[notDivIdx++] = leftArr[i];
-            }
-            i++;
-        }
-
-        while (j < rightArr.length) {
-            if (rightArr[j] % k == 0) {
-                divTemp[divIdx++] = rightArr[j];
-            }
-            else {
-                notDivTemp[notDivIdx++] = rightArr[j];
-            }
-            j++;
-        }
-
-        for (i = 0; i < divIdx - 1; i++) {
-            for (j = i + 1; j < divIdx; j++) {
-                if (divTemp[i] < divTemp[j]) {
-                    int tmp = divTemp[i];
-                    divTemp[i] = divTemp[j];
-                    divTemp[j] = tmp;
+                    arr[x++] = R[j++];
                 }
             }
         }
 
-        for (i = 0; i < notDivIdx - 1; i++) {
-            for (j = i + 1; j < notDivIdx; j++) {
-                if (notDivTemp[i] > notDivTemp[j]) {
-                    int tmp = notDivTemp[i];
-                    notDivTemp[i] = notDivTemp[j];
-                    notDivTemp[j] = tmp;
-                }
-            }
+        while (i < n1) {
+            arr[x++] = L[i++];
         }
 
-        int idx = left;
-        for (i = 0; i < divIdx; i++) {
-            arr[idx++] = divTemp[i];
-        }
-        for (j = 0; j < notDivIdx; j++) {
-            arr[idx++] = notDivTemp[j];
-        }
-
-        /* // Collect divisible by k
-        for (int val : leftArr) {
-            if (val % k == 0) temp[idx++] = val;
-        }
-        for (int val : rightArr) {
-            if (val % k == 0) temp[idx++] = val;
-        }   
-
-        // Sort and reverse divisible part
-        Arrays.sort(temp, 0, idx);
-        int start = 0;
-        int end = idx -1;
-        while (start < end) {
-            int t = temp[start];
-            temp[start] = temp[end];
-            temp[end] = t;
-            start++;
-            end--;
-        }
-
-        // Collect not divisible by k
-        for (int val : leftArr) {
-            if (val % k != 0) temp[idx++] = val;
-        }
-        for (int val : rightArr) {
-            if (val % k != 0) temp[idx++] = val;
-        }
-
-        // Sort not divisible part (ascending)
-        Arrays.sort(temp, right - left + 1 - (idx - (mid - left + 1 + rightArr.length)), idx);
-
-        // Copy back to original array
-        for (int i = 0; i < temp.length; i++) {
-            arr[left + i] = temp[i];
-        }*/
-
-        int[] temp = new int[right - left + 1]; // Temporary array for merging
-        int idx = 0; // Pointer for placing values in temp array
-
-        // Copy all divisible by k into temp array
-        for (int i = left; i <= right; i++) {
-            if (arr[i] % k == 0) {
-                temp[idx++] = arr[i];
-            }
-        }
-
-        // Copy all non-divisible by k into temp array
-        for (int i = left; i <= right; i++) {
-            if (arr[i] % k != 0) {
-                temp[idx++] = arr[i];
-            }
-        }
-
-        Arrays.sort(temp, idx, temp.length);
-
-        for (int i = 0; i < temp.length; i++) {
-            arr[left + i] = temp[i];
+        while (j < n2) {
+            arr[x++] = R[j++];
         }
     }
 
